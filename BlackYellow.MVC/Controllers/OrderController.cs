@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using BlackYellow.Domain.Entites;
+using BlackYellow.MVC.Domain.Entites;
 using Newtonsoft.Json;
-using BlackYellow.Domain.Interfaces.Services;
+using BlackYellow.MVC.Domain.Interfaces.Services;
 using BlackYellow.MVC.ViewModels;
+
+// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BlackYellow.MVC.Controllers
 {
@@ -28,28 +30,9 @@ namespace BlackYellow.MVC.Controllers
 
         }
 
-        public IActionResult Index(long id)
+        public IActionResult Index()
         {
-
-            Order order = null;
-
-            if ((User?.Identity?.IsAuthenticated ?? false))
-            {
-                var customer = _customerService.Get(Convert.ToInt32(User.Identity.AuthenticationType));
-
-
-                order = _orderService.Get(id);
-
-                if (!(order.CustomerId == customer.CustomerId))
-                {
-                    order = null;
-                }
-            }
-
-
-
-            return View(order);
-
+            return View();
         }
 
         public IActionResult Cart()
@@ -124,7 +107,7 @@ namespace BlackYellow.MVC.Controllers
         public IActionResult Checkout()
         {
             var cartSessionText = HttpContext.Session.GetString(SessionCart);
-            if (!string.IsNullOrEmpty(cartSessionText))
+            if(!string.IsNullOrEmpty(cartSessionText))
             {
                 Cart cart = JsonConvert.DeserializeObject<Cart>(cartSessionText);
                 if (User?.Identity?.IsAuthenticated == true)
@@ -140,7 +123,7 @@ namespace BlackYellow.MVC.Controllers
                     return RedirectToAction("Login", "Account");
             }
             else
-                return RedirectToAction("Cart", "Order");
+                return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
@@ -149,8 +132,6 @@ namespace BlackYellow.MVC.Controllers
             var cartSessionText = HttpContext.Session.GetString(SessionCart);
             Cart cart = JsonConvert.DeserializeObject<Cart>(cartSessionText);
             var customer = _customerService.Get(Convert.ToInt32(User.Identity.AuthenticationType));
-
-          
 
             if (User?.Identity?.IsAuthenticated == true && customer != null)
             {
@@ -162,14 +143,14 @@ namespace BlackYellow.MVC.Controllers
 
                     order.Itens = cart.Itens;
                     order.OrderDate = DateTime.Now;
-
+                    
                     order.PaymentDate = DateTime.Now;
                     //    order.PaymentMethod = Order.EPaymentMethod.Boleto;
                     if (order.PaymentMethod == Order.EPaymentMethod.Boleto)
                         order.OrderStatus = Order.EStatusOrder.Concluido;
                     else
                         order.OrderStatus = Order.EStatusOrder.AguardandoPagamento;
-
+                      
                     foreach (var item in order.Itens)
                     {
                         var p = _productService.Get(item.Product.ProductId);
@@ -189,28 +170,23 @@ namespace BlackYellow.MVC.Controllers
                         _cartItemService.Insert(item);
                     }
 
-
+                   
                     ViewBag.Message = "Compra Realizada com sucesso ! Número do pedido :" + order.TicketNumber;
-                    HttpContext.Session.Clear();
-
                     if (order.PaymentMethod == Order.EPaymentMethod.Boleto)
                     {
-
                         BoletoViewModel boleto = new BoletoViewModel();
                         boleto.Order = order;
                         boleto.Order.Customer = customer;
 
-                        return View("Boleto", boleto);
+                        HttpContext.Session.Clear();
 
+                        return View("Boleto", boleto);
                     }
-                    else if (order.PaymentMethod == Order.EPaymentMethod.PagamentoConta)
+                    else
                     {
                         return View("WaitingPayment", customer);
                     }
-                  
-
-                    return View();
-
+                      
 
                 }
                 else
@@ -228,27 +204,7 @@ namespace BlackYellow.MVC.Controllers
 
 
 
-        public IActionResult MyOrders()
-        {
 
-            IEnumerable<Order> orders = null; // new Order();
-
-            if (User?.Identity?.IsAuthenticated ?? false)
-            {
-
-                var customer = _customerService.Get(Convert.ToInt32(User.Identity.AuthenticationType));
-
-                orders = _orderService.GetAll(customer.CustomerId);
-
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            return View(orders);
-
-        }
 
         [HttpPost]
         public JsonResult Buy([FromBody] Product prod)

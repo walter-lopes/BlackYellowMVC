@@ -4,14 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
-using BlackYellow.Domain.Interfaces.Services;
-using BlackYellow.Service;
-using BlackYellow.Domain.Interfaces.Repositories;
-using BlackYellow.Infrastructure.Repositories;
+using BlackYellow.MVC.Domain.Interfaces.Services;
+using BlackYellow.MVC.Services;
+using BlackYellow.MVC.Domain.Interfaces.Repositories;
+using BlackYellow.MVC.Repositories;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using BlackYellow.Infrastructure.Context;
 
 namespace BlackYellow.MVC
 {
@@ -32,7 +30,7 @@ namespace BlackYellow.MVC
             }
             Configuration = builder.Build();
 
-            BlackYellowContext.ConfigConnection = Configuration.GetConnectionString("BlackYellowConnection");
+            Context.BlackYellowContext.ConfigConnection = Configuration.GetConnectionString("BlackYellowConnection");
 
         }
 
@@ -64,17 +62,12 @@ namespace BlackYellow.MVC
             services.AddSingleton<IOrderRepository, OrderRepository>();
             services.AddSingleton<ICartItemRepository, CartItemRepository>();
             services.AddSingleton<ICartItemService, CartItemService>();
-            services.AddSingleton<ICategoryRepository, CategoryRepository>();
-            services.AddSingleton<ICategoryService, CategoryService>();
 
 
 
             //  Referencia importante para sessions----> http://benjii.me/2016/07/using-sessions-and-httpcontext-in-aspnetcore-and-mvc-core/
             services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
             services.AddSession();
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-               .AddCookie();
 
 
         }
@@ -103,8 +96,15 @@ namespace BlackYellow.MVC
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseAuthentication();
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookie",
+                LoginPath = new PathString("/Account/Login/"),
+                AccessDeniedPath = new PathString("/Account/Forbidden/"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseApplicationInsightsRequestTelemetry();
 

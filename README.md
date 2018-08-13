@@ -1,51 +1,16 @@
-# Black Yellow - Open Source Project
+# Black-Yellow-Ecommerce
+Ecommerce in .NET Core
 
 
-# Why Black Yellow Project
+Instalar o .NET Core no Ubuntu:
 
+https://www.microsoft.com/net/core#linuxubuntu
 
-The Black Yellow is a open source project written in .NET Core. My idea is learn and teach about new features, architecture, frameworks that help programmers to create a great applications using the bests pratices. Share knowledge and learn about .NET world.
+############# Porém com essa versão:
 
+sudo apt-get install dotnet-dev-1.0.0-preview2-003156 
 
-# This project implement these technologies:
+https://www.microsoft.com/net/download/linux
 
-- ASP.NET Core 2.0
-- ASP.CORE MVC Core
-- .NET Core Native DI
-- Dapper
-- AutoMapper
-
-# Architecture:
-
-- SOLID and CLean Code concepts
-- DDD
-- Repository and Generic Repository
-
-# News
-
-01/14/2018 - Started a write test for application using unit tests and BDD tests, our goal is coverage a 70% the application with tests
-
-# Next technologies and Architecture:
-
-- Mongodb
-- WEB API
-- MediatR
-- Habbit MQ
-- React
-- Redux
-
-- CQRS
-- Unit of Work
-- Domain Notification
-- Event Sourcing
-- Domain Events
-- Micro services
-
-
-# Influences
-
-The main influence was a System Architect and MVP Eduardo Pires with your project Equinox.
-
-https://github.com/EduardoPires/EquinoxProject
 
 

@@ -36,18 +36,18 @@
         <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
         <div class="menu-list">
             <ul id="menu-content" class="menu-content collapse out">
-                @*<li>
+                <li>
                     <a href="~/Report/Dashboard">
                         <i class="fa fa-dashboard fa-lg"></i> Dashboard
                     </a>
-                </li>*@
+                </li>
                 <li data-toggle="collapse" data-target="#products" class="collapsed active">
                     <a href="#"><i class="fa fa-bars fa-lg"></i> Relatórios <span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="products">
                     <li><a href="~/Report/Orders">Relatório de Vendas</a></li>
                     <li><a href="~/Report/Products">Relatório de Produtos</a></li>
-                    @*<li><a href="~/Report/Customer">Relatório de Clientes</a></li>*@
+                    <li><a href="~/Report/Customer">Relatório de Clientes</a></li>
                 </ul>
                 <li data-toggle="collapse" data-target="#service" class="collapsed">
                     <a href="~/Product/Index"><i class="fa fa-gift fa-lg"></i> Produtos </a>
@@ -59,11 +59,11 @@
                     <a href="~/Category/Index"><i class="fa fa-dashcube fa-lg"></i> Categorias </a>
                 </li>
 
-                @*<li>
+                <li>
                     <a href="~/Supplier/Index">
                         <i class="fa fa-truck fa-lg"></i> Fornecedores
                     </a>
-                </li>*@
+                </li>
                 <li>
                     <a href="~/User/Index">
                         <i class="fa fa-users fa-lg"></i> Usuários
@@ -80,11 +80,11 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="@Url.Action("Create", "User")">BlackYellow</a>
+                <a class="navbar-brand" href="~/Report/Dashboard">BlackYellow</a>
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/Account/Logout"><span class="glyphicon glyphicon-log-out"></span> SAIR</a></li>
+                <li><a href="/Account/Logout"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             </ul>
         </div>
     </nav>

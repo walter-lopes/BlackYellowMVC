@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using BlackYellow.Domain.Entites;
-using BlackYellow.Domain.Interfaces.Services;
+using BlackYellow.MVC.Domain.Entites;
+using BlackYellow.MVC.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BlackYellow.MVC.Controllers
@@ -36,24 +36,7 @@ namespace BlackYellow.MVC.Controllers
         {
             return View();
         }
-        public JsonResult ListWithProducts()
-        {
-            try
-            {
 
-                IEnumerable<Category> lista = _categoryService.GetAllWithProducts();
-
-                return Json(new { categories = lista });
-            }
-            catch (Exception ex)
-            {
-
-                return Json(new { error = "Erro ao trazer as categorias" });
-            }
-
-
-        }
-        
 
         public JsonResult List()
         {

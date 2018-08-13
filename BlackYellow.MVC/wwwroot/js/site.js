@@ -3,7 +3,7 @@
 $(document).ready(function () {
     getCategories();
     getItensQTD();
-
+   
 });
 
 function buy(id) {
@@ -16,7 +16,6 @@ function buy(id) {
         url: "/Order/Buy",
         data: JSON.stringify(product),
         success: function (data) {
-            getItensQTD();
             bootbox.alert("Produto adicionado com sucesso");
         }
     })
@@ -27,7 +26,7 @@ function getCategories() {
     $.ajax({
         contentType: "application/json",
         method: "POST",
-        url: "/Category/ListWithProducts",
+        url: "/Category/List",
         success: function (data) {
             fillCategories(data.categories);
         }
@@ -81,6 +80,7 @@ function getItensQTD() {
 }
 
 
-function fillCartQTD(qtd) {
-    $(".product-count").html(qtd);
+function fillCartQTD(qtd)
+{
+    $(".product-count").append(qtd);
 }

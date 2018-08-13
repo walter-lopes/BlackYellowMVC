@@ -1,5 +1,5 @@
-﻿using BlackYellow.Domain.Entites;
-using BlackYellow.Domain.Interfaces.Services;
+﻿using BlackYellow.MVC.Domain.Entites;
+using BlackYellow.MVC.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,61 +31,6 @@ namespace BlackYellow.MVC.Controllers
             IEnumerable<Product> list = _productService.GetAll();
             return View(list);
         }
-
-        [Authorize(Roles = "Administrator")]
-        public IActionResult Edit(long id)
-        {
-            Product product = _productService.Get(id);
-            return View(product);
-        }
-
-        [Authorize(Roles = "Administrator"), HttpPost]
-        public IActionResult Edit(Product product)
-        {
-
-
-            string message = default(string);
-
-            if (product.Quantity > 0 && product.Price > 0)
-            {
-
-                if (!string.IsNullOrWhiteSpace(product.Name) && !string.IsNullOrWhiteSpace(product.Description))
-                {
-
-
-
-
-                    Product original = _productService.Get(product.ProductId);
-
-                    original.Name = product.Name;
-                    original.Price = product.Price;
-                    original.Description = product.Description;
-                    original.Quantity = product.Quantity;
-
-                    _productService.Update(original);
-
-                    ViewBag.Message = "Produto atualizado com sucesso";
-
-
-                     return View(product);
-
-                }
-                else
-                    message = "Digite nome e descrição para o produto";
-
-
-
-
-            }
-            else
-                message = "Verifique a quantidade e o preço do produto.";
-
-            ViewBag.Message = message;
-            return View(product);
-
-
-        }
-
 
 
         public IActionResult Details(long id)
@@ -136,11 +81,6 @@ namespace BlackYellow.MVC.Controllers
         {
             try
             {
-                if (product.Quantity < 0 || product.Price < 0)
-                {
-                    TempData["MsgErro"] = "Erro ao cadastrar produto.";
-                    return Redirect("/Product/Create");
-                }
                 var path = string.Empty;
                 var pathServer = "images/products/";
                 path = _environment.WebRootPath + "/images/products/";
@@ -149,9 +89,9 @@ namespace BlackYellow.MVC.Controllers
                 files.Add(details_file2);
                 files.Add(details_file3);
 
-              //  product.FileGalery(main_file, files, pathServer);
+                product.FileGalery(main_file, files, pathServer);
                 product.DateRegister = DateTime.Now;
-               // _productService.UploadProductFiles(main_file, files, path);
+                _productService.UploadProductFiles(main_file, files, path);
                 if (_productService.InsertProduct(product))
                 {
                     TempData["MsgSucesso"] = "Produto cadastrado com sucesso.";
@@ -175,12 +115,12 @@ namespace BlackYellow.MVC.Controllers
         [HttpGet]
         public IActionResult SearchProducts(string product)
         {
-            IEnumerable<Product> prods = _productService.GetByName(product);
+            IEnumerable <Product> prods = _productService.GetByName(product);
             return View(prods);
 
         }
 
-        //  [HttpGet]
+      //  [HttpGet]
         public IActionResult SearchByCategory(long id)
         {
             IEnumerable<Product> prods = _productService.GetByCategory(id.ToString());

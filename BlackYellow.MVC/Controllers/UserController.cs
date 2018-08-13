@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using BlackYellow.Domain.Interfaces.Services;
-using BlackYellow.Domain.Entites;
+using BlackYellow.MVC.Domain.Interfaces.Services;
+using BlackYellow.MVC.Domain.Entites;
 using Microsoft.AspNetCore.Authorization;
-using BlackYellow.Domain.Enum;
+
+// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BlackYellow.MVC.Controllers
 {
@@ -19,6 +20,7 @@ namespace BlackYellow.MVC.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
+        // GET: /<controller>/
         public IActionResult Index()
         {
             IEnumerable<User> list = _userService.GetAllUserAdmin();
@@ -37,7 +39,7 @@ namespace BlackYellow.MVC.Controllers
 
             try
             {
-                user.Profile = Profile.Administrator;
+                user.Profile = Domain.Enum.Profile.Administrator;
                 _userService.Insert(user);
                 return Json(new { success = "Cadastro realizado com sucesso" });
             }
