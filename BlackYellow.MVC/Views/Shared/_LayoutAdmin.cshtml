@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlackYellow</title>
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/css/admin/style.css")" />
+    <script src="@Url.Content("~/lib/jquery/dist/jquery.js")"></script>
+    <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.js")"></script>
+    <link rel="stylesheet" href="@Url.Content("~/css/floating-labels.css")" />
+
+    <style>
+        table.table ul.dropdown-menu {
+            position: relative;
+            float: none;
+            max-width: 160px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="nav-side-menu">
+        <div class="brand">Black Yellow</div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <div class="menu-list">
+            <ul id="menu-content" class="menu-content collapse out">
+                @*<li>
+                    <a href="~/Report/Dashboard">
+                        <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                    </a>
+                </li>*@
+                <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                    <a href="#"><i class="fa fa-bars fa-lg"></i> Relatórios <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products">
+                    <li><a href="~/Report/Orders">Relatório de Vendas</a></li>
+                    <li><a href="~/Report/Products">Relatório de Produtos</a></li>
+                    @*<li><a href="~/Report/Customer">Relatório de Clientes</a></li>*@
+                </ul>
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a href="~/Product/Index"><i class="fa fa-gift fa-lg"></i> Produtos </a>
+                </li>
+
+
+
+                <li data-toggle="collapse" data-target="#new" class="collapsed">
+                    <a href="~/Category/Index"><i class="fa fa-dashcube fa-lg"></i> Categorias </a>
+                </li>
+
+                @*<li>
+                    <a href="~/Supplier/Index">
+                        <i class="fa fa-truck fa-lg"></i> Fornecedores
+                    </a>
+                </li>*@
+                <li>
+                    <a href="~/User/Index">
+                        <i class="fa fa-users fa-lg"></i> Usuários
+                    </a>
+                </li>
+                <li>
+                    <a href="/">
+                        <i class="fa fa-dashboard fa-lg"></i> Site BlackYellow
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="@Url.Action("Create", "User")">BlackYellow</a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Account/Logout"><span class="glyphicon glyphicon-log-out"></span> SAIR</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" id="main">
+
+        @RenderBody()
+    </div>
+
+
+    <!--Success Modal Templates-->
+    <div id="modal-success" class="modal modal-message modal-success fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="glyphicon glyphicon-check"></i>
+                </div>
+                <div class="modal-title">Success</div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+    <!--End Success Modal Templates-->
+    <!--Info Modal Templates-->
+    <div id="modal-info" class="modal modal-message modal-info fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fa fa-envelope"></i>
+                </div>
+                <div class="modal-title">Alert</div>
+
+                <div class="modal-body">You'vd got mail!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+    <!--End Info Modal Templates-->
+    <!--Danger Modal Templates-->
+    <div id="modal-danger" class="modal modal-message modal-danger fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="glyphicon glyphicon-fire"></i>
+                </div>
+                <div class="modal-title">Alert</div>
+
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+    <!--End Danger Modal Templates-->
+    <!--Danger Modal Templates-->
+    <div id="modal-warning" class="modal modal-message modal-warning fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fa fa-warning"></i>
+                </div>
+                <div class="modal-title">Warning</div>
+
+                <div class="modal-body">Is something wrong?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+    <!--End Danger Modal Templates-->
+
+    <script src="@Url.Content("~/js/admin/_layoutAdmin/general.js")"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="@Url.Content("~/js/floating-labels.js")"></script>
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+
+            //$('.table').on('show.bs.dropdown', function () {
+            //    $('.table').css("overflow", "inherit");
+            //});
+
+            //$('.table').on('hide.bs.dropdown', function () {
+            //    $('.table').css("overflow", "auto");
+            //})
+
+            $('.datepicker').datepicker({
+                format: "dd/mm/yyyy",
+                language: "pt-BR",
+                autoclose: true
+            });
+
+            $('.datatable').bootstrapTable({
+                locale: 'pt-BR',
+                search: "true",
+                showRefresh: "true",
+                showToggle: "true",
+                showColumns: "true",
+                pagination: "true",
+                classes: "table table-condensed table-bordered table-hover table-responsive table-striped"
+            });
+
+
+
+            @if (ViewBag.Message != null) {
+
+            @:bootbox.alert('@(ViewBag.Message)');
+
+            }
+
+        });
+    </script>
+
+</body>
+</html>

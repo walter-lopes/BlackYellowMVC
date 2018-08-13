@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.1" />
+    <PackageReference Include="MySql.Data" Version="6.10.5" />
+  </ItemGroup>
+
+  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
+    <Exec Command="bower install" />
+    <Exec Command="dotnet bundle" />
+  </Target>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlackYellow.Domain\BlackYellow.Domain.csproj" />
+    <ProjectReference Include="..\BlackYellow.Infra.CrossCuting.Security\BlackYellow.Infra.CrossCuting.Security.csproj" />
+    <ProjectReference Include="..\BlackYellow.Infrastructure\BlackYellow.Infrastructure.csproj" />
+    <ProjectReference Include="..\BlackYellow.Service\BlackYellow.Service.csproj" />
+  </ItemGroup>
+
+</Project>

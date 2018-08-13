@@ -1,0 +1,50 @@
+﻿@model BlackYellow.Domain.Entites.Customer
+
+@{
+
+    ViewBag.Title = "Novo usuário";
+
+}
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>Registrar-se</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Page title area -->
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+
+        @using (Html.BeginForm(actionName: "Register", controllerName: "Account", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data" }))
+        {
+
+
+        @Html.Partial("~/Views/Account/Shared/_CustomerData.cshtml", Model)
+
+            <p>
+
+                <input type="submit" class="btn btn-default" value="Cadastrar" />
+                <input type="reset" class="btn btn-danger" value="Limpar" />
+
+            </p>
+
+            <div class="clear"></div>
+
+        }
+
+
+
+    </div>
+</div>
+
+@section scripts
+{
+
+}
